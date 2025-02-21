@@ -1,14 +1,17 @@
 import {
+  ShuffleEncryptParams,
   AuthState,
   GameState,
   PlayerStatus
 } from "./types/access_control";
 import {
+  getShuffleEncryptParamsLeo,
   getAuthStateLeo,
   getGameStateLeo,
   getPlayerStatusLeo
 } from "./js2leo/access_control";
 import {
+  getShuffleEncryptParams,
   getAuthState,
   getGameState,
   getPlayerStatus
@@ -47,6 +50,30 @@ export class Access_controlContract extends BaseContract {
       isImportedAleo: false
     });
   }
+  async veify_encrypted_shuffle(r0: ShuffleEncryptParams): Promise < TransactionResponse < TransactionModel & receipt.Access_controlVeify_encrypted_shuffleTransition, [] >> {
+    const r0Leo = js2leo.json(getShuffleEncryptParamsLeo(r0));
+
+    const params = [r0Leo]
+    const result = await this.ctx.execute('veify_encrypted_shuffle', params);
+    return result
+  }
+
+  async start_game(r0: number, r1: bigint, r2: bigint, r3: bigint, r4: bigint, r5: LeoAddress, r6: bigint, r7: bigint): Promise < TransactionResponse < TransactionModel & receipt.Access_controlStart_gameTransition, [bigint] >> {
+    const r0Leo = js2leo.u8(r0);
+    const r1Leo = js2leo.u64(r1);
+    const r2Leo = js2leo.u64(r2);
+    const r3Leo = js2leo.u64(r3);
+    const r4Leo = js2leo.u64(r4);
+    const r5Leo = js2leo.address(r5);
+    const r6Leo = js2leo.u128(r6);
+    const r7Leo = js2leo.u128(r7);
+
+    const params = [r0Leo, r1Leo, r2Leo, r3Leo, r4Leo, r5Leo, r6Leo, r7Leo]
+    const result = await this.ctx.execute('start_game', params);
+    result.set_converter_fn([leo2js.field]);
+    return result
+  }
+
   async authenticate(r0: string, r1: LeoAddress, r2: AuthState): Promise < TransactionResponse < TransactionModel & receipt.Access_controlAuthenticateTransition, [] >> {
     const r0Leo = js2leo.signature(r0);
     const r1Leo = js2leo.address(r1);

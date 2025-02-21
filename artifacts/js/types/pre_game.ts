@@ -71,28 +71,6 @@ export const leoShuffleEncryptParamsSchema = z.object({
         });
       export type ShuffleEncryptParamsLeo = z.infer < typeof leoShuffleEncryptParamsSchema > ;
 
-      export interface PlayerStatus {
-        status: number;
-      }
-
-      export const leoPlayerStatusSchema = z.object({
-        status: leoU8Schema,
-      });
-      export type PlayerStatusLeo = z.infer < typeof leoPlayerStatusSchema > ;
-
-      export interface AuthState {
-        owner: LeoAddress;
-        nonce: bigint;
-        _nonce: bigint;
-      }
-
-      export const leoAuthStateSchema = z.object({
-        owner: leoAddressSchema,
-        nonce: leoU128Schema,
-        _nonce: leoGroupSchema,
-      });
-      export type AuthStateLeo = z.infer < typeof leoAuthStateSchema > ;
-
       export interface Player {
         id: bigint;
         addr: LeoAddress;

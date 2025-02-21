@@ -5,15 +5,11 @@ import {
   EncryptedCardLeo,
   ShuffleEncryptParams,
   ShuffleEncryptParamsLeo,
-  PlayerStatus,
-  PlayerStatusLeo,
-  AuthState,
-  AuthStateLeo,
   Player,
   PlayerLeo,
   GameState,
   GameStateLeo
-} from "../types/access_control";
+} from "../types/pre_game";
 import {
   leo2js,
   tx,
@@ -52,31 +48,6 @@ export function getShuffleEncryptParams(shuffleEncryptParams: ShuffleEncryptPara
           player_encryption1: leo2js.array(shuffleEncryptParams.player_encryption1, leo2js.EncryptedCard),
           player_encryption2: leo2js.array(shuffleEncryptParams.player_encryption2, leo2js.EncryptedCard),
         }
-        return result;
-      }
-
-      export function getPlayerStatus(playerStatus: PlayerStatusLeo): PlayerStatus {
-        const result: PlayerStatus = {
-          status: leo2js.u8(playerStatus.status),
-        }
-        return result;
-      }
-
-      export function getAuthState(authState: AuthStateLeo): AuthState {
-        const result: AuthState = {
-          owner: leo2js.address(authState.owner),
-          nonce: leo2js.u128(authState.nonce),
-          _nonce: leo2js.group(authState._nonce),
-        }
-        return result;
-      }
-
-
-      export function decryptAuthState(authState: tx.RecordOutput < AuthState > | string, privateKey: string): AuthState {
-        const encodedRecord: string = typeof authState === 'string' ? authState : authState.value;
-        const decodedRecord: string = PrivateKey.from_string(privateKey).to_view_key().decrypt(encodedRecord);
-        const result: AuthState = getAuthState(parseJSONLikeString(decodedRecord));
-
         return result;
       }
 

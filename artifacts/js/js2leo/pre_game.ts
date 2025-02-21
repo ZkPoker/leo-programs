@@ -5,15 +5,11 @@ import {
   EncryptedCardLeo,
   ShuffleEncryptParams,
   ShuffleEncryptParamsLeo,
-  PlayerStatus,
-  PlayerStatusLeo,
-  AuthState,
-  AuthStateLeo,
   Player,
   PlayerLeo,
   GameState,
   GameStateLeo
-} from "../types/access_control";
+} from "../types/pre_game";
 import {
   js2leo
 } from "@doko-js/core";
@@ -46,22 +42,6 @@ export function getShuffleEncryptParamsLeo(shuffleEncryptParams: ShuffleEncryptP
           random_vector2: js2leo.array(shuffleEncryptParams.random_vector2, js2leo.scalar),
           player_encryption1: js2leo.array(shuffleEncryptParams.player_encryption1, js2leo.EncryptedCard),
           player_encryption2: js2leo.array(shuffleEncryptParams.player_encryption2, js2leo.EncryptedCard),
-        }
-        return result;
-      }
-
-      export function getPlayerStatusLeo(playerStatus: PlayerStatus): PlayerStatusLeo {
-        const result: PlayerStatusLeo = {
-          status: js2leo.u8(playerStatus.status),
-        }
-        return result;
-      }
-
-      export function getAuthStateLeo(authState: AuthState): AuthStateLeo {
-        const result: AuthStateLeo = {
-          owner: js2leo.privateField(js2leo.address(authState.owner)),
-          nonce: js2leo.privateField(js2leo.u128(authState.nonce)),
-          _nonce: js2leo.publicField(js2leo.group(authState._nonce)),
         }
         return result;
       }
